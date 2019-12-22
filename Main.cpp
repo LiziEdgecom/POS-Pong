@@ -4,3 +4,5 @@
 //asasdjj
 
 //no takto to pojde
+
+//nepojde
