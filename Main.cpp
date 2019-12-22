@@ -10,3 +10,7 @@ dddd;
 
 // druhy pokus o spojenie
 ach ja boze moj;
+
+
+double skuska;
+int smrt;
