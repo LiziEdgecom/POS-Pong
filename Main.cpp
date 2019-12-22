@@ -2,3 +2,5 @@
 // 
 
 //asasdjj
+
+//no takto to pojde
