@@ -9,3 +9,4 @@ dddd;
 //no takto to pojde
 
 // druhy pokus o spojenie
+ach ja boze moj;
