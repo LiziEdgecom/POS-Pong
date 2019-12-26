@@ -18,9 +18,27 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Hrac.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Lopta.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Hra.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Hrac.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Lopta.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Hra.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

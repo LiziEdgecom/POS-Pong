@@ -123,9 +123,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Hra.cpp" />
+    <ClCompile Include="Hrac.cpp" />
+    <ClCompile Include="Lopta.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Hra.h" />
+    <ClInclude Include="Hrac.h" />
+    <ClInclude Include="Lopta.h" />
     <ClInclude Include="Main.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
