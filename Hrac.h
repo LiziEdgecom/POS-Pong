@@ -18,6 +18,10 @@ public:
 	void PohybDole();
 	void Reset();
 	void Score();
+	int getPolohaX() { return polohaX; };
+	int getPolohaY() { return polohaY; };
+	int getScore() { return score; };
+	string getMeno() { return meno; };
 };
 
 
