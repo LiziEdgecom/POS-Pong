@@ -17,6 +17,7 @@ public:
 	void ZmenaSmeru(eSmer s);
 	int GetSurX() { return surX; };
 	int GetSurY() { return surY; };
+	eSmer GetSmer() { return smer; };
 
 };
 

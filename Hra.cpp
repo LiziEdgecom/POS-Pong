@@ -7,13 +7,14 @@ Hra::Hra(int sirka, int vyska, Hrac* player1, Hrac* player2, Lopta* paLopta)
 {
 	sirkaPola = sirka;
 	vyskaPola = vyska;
-	hrac1 = player1;
-	hrac2 = player2;
+	hrac1 = player1; //hrac na lavej strane
+	hrac2 = player2; //hrac na pravej strane
 	lopta = paLopta;
 }
 
 void Hra::vykreslenie()
 {
+	system("cls");
 	//vypis skore
 	cout << endl;
 	cout << "\t\t\t";
@@ -68,4 +69,45 @@ void Hra::vykreslenie()
 
 void Hra::kolizie()
 {
+	
+	if (lopta->GetSurX() == sirkaPola-2 && (hrac2->getPolohaY() - 2 || hrac2->getPolohaY() - 1 || 
+											hrac2->getPolohaY() || hrac2->getPolohaY() + 1 || hrac2->getPolohaY() + 2) ) // ak sa lopta dotyka dosky hraca2
+	{
+		lopta->ZmenaSmeru((eSmer)((rand() % 3) + 4)); // nahodny smer smerom dolava
+	}
+
+	if (lopta->GetSurX() == 1 && (hrac1->getPolohaY() - 2 || hrac1->getPolohaY() - 1 ||
+								hrac1->getPolohaY() || hrac1->getPolohaY() + 1 || hrac1->getPolohaY() + 2)) // ak sa lopta dotyka dosky hraca1
+	{
+		lopta->ZmenaSmeru((eSmer)((rand() % 3) + 1)); // nahodny smer smerom doprava
+	}
+
+	if (lopta->GetSurY() == 1)  // ak sa lopta dotkne hornej steny
+	{
+		lopta->GetSmer() == UPRIGHT ? lopta->ZmenaSmeru(DOWNRIGHT) : lopta->ZmenaSmeru(DOWNLEFT);
+	}
+
+	if (lopta->GetSurY() == vyskaPola-2)  // ak sa lopta dotkne dolnej steny
+	{
+		lopta->GetSmer() == DOWNRIGHT ? lopta->ZmenaSmeru(UPRIGHT) : lopta->ZmenaSmeru(UPLEFT);
+	}
+
+	if (lopta->GetSurX() == sirkaPola - 2 && !(hrac2->getPolohaY() - 2 || hrac2->getPolohaY() - 1 ||
+												hrac2->getPolohaY() || hrac2->getPolohaY() + 1 || hrac2->getPolohaY() + 2)) // ak hrac2 nezachyti loptu
+	{
+		hrac1->Score();
+		lopta->Reset();
+		vykreslenie();
+		lopta->ZmenaSmeru((eSmer)((rand() % 6) + 1));
+	}
+
+	if (lopta->GetSurX() == 1 && !(hrac1->getPolohaY() - 2 || hrac1->getPolohaY() - 1 ||
+									hrac1->getPolohaY() || hrac1->getPolohaY() + 1 || hrac1->getPolohaY() + 2)) // ak sa lopta dotyka dosky hraca1
+	{
+		hrac2->Score();
+		lopta->Reset();
+		vykreslenie();
+		lopta->ZmenaSmeru((eSmer)((rand() % 6) + 1));
+	}
+
 }
