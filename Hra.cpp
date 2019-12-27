@@ -79,7 +79,7 @@ void Hra::kolizie()
 		lopta->ZmenaSmeru((eSmer)((rand() % 3) + 4)); // nahodny smer smerom dolava
 	}
 
-	if (lopta->GetSurX() == 1 && (lopta->GetSurY() == hrac1->getPolohaY() - 2 || lopta->GetSurY() == hrac1->getPolohaY() - 1 ||
+	if (lopta->GetSurX() == 2 && (lopta->GetSurY() == hrac1->getPolohaY() - 2 || lopta->GetSurY() == hrac1->getPolohaY() - 1 ||
 							     lopta->GetSurY() == hrac1->getPolohaY() || lopta->GetSurY() == hrac1->getPolohaY() + 1 ||
 								lopta->GetSurY() == hrac1->getPolohaY() + 2)) // ak sa lopta dotyka dosky hraca1
 	{
@@ -98,7 +98,7 @@ void Hra::kolizie()
 
 	if (lopta->GetSurX() == sirkaPola - 3 && !(lopta->GetSurY() == hrac2->getPolohaY() - 2 || lopta->GetSurY() == hrac2->getPolohaY() - 1 ||
 												lopta->GetSurY() == hrac2->getPolohaY() || lopta->GetSurY() == hrac2->getPolohaY() + 1 ||
-												lopta->GetSurY() == hrac2->getPolohaY() + 2)) // ak sa lopta dotyka dosky hraca2
+												lopta->GetSurY() == hrac2->getPolohaY() + 2)) // ak hrac2 nechyti loptu
 	{
 		hrac1->Score();
 		lopta->Reset();
@@ -106,9 +106,9 @@ void Hra::kolizie()
 		lopta->ZmenaSmeru((eSmer)((rand() % 6) + 1));
 	}
 
-	if (lopta->GetSurX() == 1 && !(lopta->GetSurY() == hrac1->getPolohaY() - 2 || lopta->GetSurY() == hrac1->getPolohaY() - 1 ||
+	if (lopta->GetSurX() == 2 && !(lopta->GetSurY() == hrac1->getPolohaY() - 2 || lopta->GetSurY() == hrac1->getPolohaY() - 1 ||
 								lopta->GetSurY() == hrac1->getPolohaY() || lopta->GetSurY() == hrac1->getPolohaY() + 1 ||
-								lopta->GetSurY() == hrac1->getPolohaY() + 2)) // ak sa lopta dotyka dosky hraca1
+								lopta->GetSurY() == hrac1->getPolohaY() + 2)) // ak hrac1 nechyti loptu
 	{
 		hrac2->Score();
 		lopta->Reset();
@@ -160,6 +160,10 @@ void Hra::vstupy()
 	{
 		char klavesa;
 		klavesa = _getch();
+		if (klavesa == -32)
+		{
+			klavesa = _getch();
+		}
 		switch (klavesa)
 		{
 		default:
@@ -170,10 +174,10 @@ void Hra::vstupy()
 		case 's':
 			hrac1->PohybDole();
 			break;
-		case 'i':
+		case 72:
 			hrac2->PohybHore();
 			break;
-		case 'k':
+		case 80:
 			hrac2->PohybDole();
 			break;
 		case 'q':
