@@ -1,4 +1,5 @@
 #include <iostream>
+#include <conio.h>
 #include "Hra.h"
 
 using namespace std;
@@ -10,6 +11,7 @@ Hra::Hra(int sirka, int vyska, Hrac* player1, Hrac* player2, Lopta* paLopta)
 	hrac1 = player1; //hrac na lavej strane
 	hrac2 = player2; //hrac na pravej strane
 	lopta = paLopta;
+	koniec = false;
 }
 
 void Hra::vykreslenie()
@@ -70,7 +72,7 @@ void Hra::vykreslenie()
 void Hra::kolizie()
 {
 	
-	if (lopta->GetSurX() == sirkaPola-2 && (lopta->GetSurY() == hrac2->getPolohaY() - 2 || lopta->GetSurY() == hrac2->getPolohaY() - 1 ||
+	if (lopta->GetSurX() == sirkaPola-3 && (lopta->GetSurY() == hrac2->getPolohaY() - 2 || lopta->GetSurY() == hrac2->getPolohaY() - 1 ||
 											lopta->GetSurY() == hrac2->getPolohaY() || lopta->GetSurY() == hrac2->getPolohaY() + 1 ||
 											lopta->GetSurY() == hrac2->getPolohaY() + 2) ) // ak sa lopta dotyka dosky hraca2
 	{
@@ -94,7 +96,7 @@ void Hra::kolizie()
 		lopta->GetSmer() == DOWNRIGHT ? lopta->ZmenaSmeru(UPRIGHT) : lopta->ZmenaSmeru(UPLEFT);
 	}
 
-	if (lopta->GetSurX() == sirkaPola - 2 && !(lopta->GetSurY() == hrac2->getPolohaY() - 2 || lopta->GetSurY() == hrac2->getPolohaY() - 1 ||
+	if (lopta->GetSurX() == sirkaPola - 3 && !(lopta->GetSurY() == hrac2->getPolohaY() - 2 || lopta->GetSurY() == hrac2->getPolohaY() - 1 ||
 												lopta->GetSurY() == hrac2->getPolohaY() || lopta->GetSurY() == hrac2->getPolohaY() + 1 ||
 												lopta->GetSurY() == hrac2->getPolohaY() + 2)) // ak sa lopta dotyka dosky hraca2
 	{
@@ -130,4 +132,56 @@ void Hra::kolizie()
 		lopta->ZmenaSmeru((eSmer)((rand() % 6) + 1));
 	}
 
+
+	//osetrenie aby dosky nepresli do steny
+	if (hrac1->getPolohaY() < 3)
+	{
+		hrac1->setY(hrac1->getPolohaY() + 1);
+	}
+	if (hrac2->getPolohaY() < 3)
+	{
+		hrac2->setY(hrac2->getPolohaY() + 1);
+	}
+
+	if (hrac1->getPolohaY() > vyskaPola-4)
+	{
+		hrac1->setY(hrac1->getPolohaY() - 1);
+	}
+	if (hrac2->getPolohaY() > vyskaPola - 4)
+	{
+		hrac2->setY(hrac2->getPolohaY() - 1);
+	}
+
+}
+
+void Hra::vstupy()
+{
+	if (_kbhit())
+	{
+		char klavesa;
+		klavesa = _getch();
+		switch (klavesa)
+		{
+		default:
+			break;
+		case 'w':
+			hrac1->PohybHore();
+			break;
+		case 's':
+			hrac1->PohybDole();
+			break;
+		case 'i':
+			hrac2->PohybHore();
+			break;
+		case 'k':
+			hrac2->PohybDole();
+			break;
+		case 'q':
+			koniec = true;
+			break;
+
+		}
+	}
+	
+	
 }

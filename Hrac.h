@@ -18,6 +18,7 @@ public:
 	void PohybDole();
 	void Reset();
 	void Score();
+	void setY(int y) { polohaY = y; };
 	int getPolohaX() { return polohaX; };
 	int getPolohaY() { return polohaY; };
 	int getScore() { return score; };

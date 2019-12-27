@@ -14,11 +14,13 @@ void main(){
 	hra->vykreslenie();
 	srand(time(NULL));
 	hra->getLopta()->ZmenaSmeru((eSmer) ((rand() % 6) + 1));
-	while (true)
+	while (!hra->getKoniec())
 	{
 		lopta->Pohyb();
-		hra->vykreslenie();
+		hra->vstupy();
 		hra->kolizie();
+		hra->vykreslenie();
+		
 	}
 	
 }
