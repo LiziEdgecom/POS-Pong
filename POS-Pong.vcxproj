@@ -134,6 +134,7 @@
     <ClCompile Include="Klient.cpp" />
     <ClCompile Include="Lopta.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Vstup.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Hra.h" />
@@ -141,6 +142,7 @@
     <ClInclude Include="Klient.h" />
     <ClInclude Include="Lopta.h" />
     <ClInclude Include="Main.h" />
+    <ClInclude Include="Vstup.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

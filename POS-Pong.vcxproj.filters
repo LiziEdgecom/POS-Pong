@@ -30,6 +30,9 @@
     <ClCompile Include="Klient.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Vstup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h">
@@ -45,6 +48,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Klient.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vstup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
