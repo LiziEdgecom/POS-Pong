@@ -2,9 +2,10 @@
 #include "Hrac.h"
 #include "Lopta.h"
 #include "Hra.h"
+#include "Klient.h"
 #include <random>
 #include <time.h>
-void main(){
+void main(){	
 	int sirka = 40;
 	int vyska = 20;
 	Hrac* hrac1 = new Hrac(1,10,"andrej");
