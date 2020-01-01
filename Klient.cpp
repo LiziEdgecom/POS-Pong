@@ -23,7 +23,7 @@ Klient::~Klient()
 void Klient::Citaj()
 {
 	
-	/*format spravy    x1-y1-x2-y2-bx-by-s1-s2-H-W
+	/*format spravy    x1-y1-x2-y2-bx-by-s1-s2-W-H
 	 - oddelovac
 	x1 y1 suradnice hraca 1
 	x2 y2 suradnice hraca 2
@@ -34,7 +34,6 @@ void Klient::Citaj()
 	*/
 
 	char data[21];
-	int udaje[10];
 	string delimiter = "-";
 	size_t recieveddata = 0;
 	while (true)
@@ -58,10 +57,7 @@ void Klient::Citaj()
 			for (int i = 0; i < 8; i++)
 			{
 				udaje[i] = stoi(res[i]);
-			}
-			update(udaje); // poslat ziskane udaje na vypisanie/vykreslenie
-
-			
+			}			
 		}
 	}
 }
@@ -79,62 +75,62 @@ void Klient::Posli(string sprava)
 	}
 }
 
-void Klient::update(int udaje[])
+
+void Klient::hra()
 {
-	// zobrazenie udajov
-	
-	system("cls");
-	//vypis skore
-	cout << endl;
-	cout << "\t\t\t";
-	cout << udaje[6];
-	cout << " : ";
-	cout << udaje[7];
-	cout << endl;
-
-	//vypis plochy
-	for (int i = 0; i < udaje[8]; i++) // y suradnica
-	{
-		for (int j = 0; j < udaje[9]; j++) // x suradnica
+	/*
+	udaje[0] x1
+	udaje[1] y1
+	udaje[2] x2
+	udaje[3] y2
+	udaje[4] bx
+	udaje[5] by
+	udaje[6] s1
+	udaje[7] s2
+	udaje[8] sirka
+	udaje[9] vyska
+	*/
+	Citaj();
+	using namespace sf;
+	RenderWindow window(VideoMode(udaje[8], udaje[9]), "POS-PONG");
+	Event event;
+	CircleShape kruh(10);
+	RectangleShape paddle1(Vector2f(15, 100));
+	RectangleShape paddle2(Vector2f(15, 100));
+	paddle1.setFillColor(Color::Black);
+	paddle2.setFillColor(Color::Black);
+	kruh.setFillColor(Color::Green);
+	Time t = milliseconds(5);
+	paddle1.setPosition(Vector2f(2, 120));
+	paddle2.setPosition(Vector2f(window.getSize().x - 2 - paddle2.getSize().x, 120));
+	while (window.isOpen())
+	{		
+		while (window.pollEvent(event))
 		{
-			if (i == 0 || j == 0 || j == udaje[9] - 1 || i == udaje[8] - 1) // ak su to okraje
+			if (event.type == Event::EventType::Closed)
 			{
-				cout << "\xB2";
+				window.close();
 			}
-			else {
-				if (i == udaje[5] && j == udaje[4]) // ak su to suradnice lopty
-				{
-					cout << "O";
-				}
-				else
-				{
-					if ((i == udaje[1] - 2 && j == udaje[0]) ||  // ak su tu suradnice hracovych dosiek
-						(i == udaje[1] - 1 && j == udaje[0]) ||
-						(i == udaje[1] && j == udaje[0]) ||
-						(i == udaje[1] + 1 && j == udaje[0]) ||
-						(i == udaje[1] + 2 && j == udaje[0]) ||
-						(i == udaje[3] - 2 && j == udaje[2]) ||
-						(i == udaje[3] - 1 && j == udaje[2]) ||
-						(i == udaje[3] && j == udaje[2]) ||
-						(i == udaje[3] + 1 && j == udaje[2]) ||
-						(i == udaje[3] + 2 && j == udaje[2]))
-					{
-						cout << "\xDB";
-					}
-					else		// ak je to prazdne policko							
-					{
-						cout << " ";
-					}
-				}
-			}
-
-
-
 		}
-		cout << endl;
+		if (Keyboard::isKeyPressed(Keyboard::Key::Up))
+		{
+			Posli("UP");
+		}
+		if (Keyboard::isKeyPressed(Keyboard::Key::Down))
+		{
+			Posli("DOWN");
+		}
+		window.clear(Color::White);
+		kruh.setPosition(udaje[4], udaje[5]);
+		window.draw(kruh);
+		paddle1.setPosition(Vector2f(udaje[0], udaje[1]));
+		window.draw(paddle1);
+		paddle2.setPosition(Vector2f(udaje[2], udaje[3]));
+		window.draw(paddle2);
+		window.display();
+		sleep(t);
+		Citaj();
 
 	}
-
-
 }
 

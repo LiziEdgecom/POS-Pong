@@ -1,6 +1,7 @@
 #pragma once
 #include "Hrac.h"
 #include "Lopta.h"
+#include <SFML/Graphics.hpp>
 
 class Hra
 {
@@ -16,6 +17,7 @@ public:
 	~Hra();
 
 	void vykreslenie();
+	void zobrazenie();
 	void kolizie();
 	void vstupy();
 

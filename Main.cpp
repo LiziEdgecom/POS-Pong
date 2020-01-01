@@ -6,13 +6,15 @@
 #include <random>
 #include <time.h>
 int main(){	
-	int sirka = 40;
-	int vyska = 20;
+	
+	int sirka = 800;
+	int vyska = 400;
 	Hrac* hrac1 = new Hrac(1,10,"andrej");
 	Hrac* hrac2 = new Hrac(sirka-2,10,"matus");
 	Lopta* lopta = new Lopta(20, 10);
 	Hra* hra = new Hra(sirka, vyska, hrac1, hrac2, lopta);
-	hra->vykreslenie();
+	hra->zobrazenie();	
+	/*hra->vykreslenie();
 	srand(time(NULL)+rand());
 	hra->getLopta()->ZmenaSmeru((eSmer) ((rand() % 6) + 1));
 	while (!hra->getKoniec())
@@ -22,6 +24,6 @@ int main(){
 		hra->kolizie();
 		hra->vykreslenie();
 		
-	}
+	}*/
 	return 0;
 }

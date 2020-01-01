@@ -69,6 +69,50 @@ void Hra::vykreslenie()
 	}
 }
 
+void Hra::zobrazenie()
+{
+	using namespace sf;
+	RenderWindow window(VideoMode(800, 400), "POS-PONG");
+	Event event;
+	CircleShape kruh(10);
+	RectangleShape paddle1(Vector2f(15,100));
+	RectangleShape paddle2(Vector2f(15,100));
+	paddle1.setFillColor(Color::Black);
+	paddle2.setFillColor(Color::Black);
+	kruh.setFillColor(Color::Green);
+	int x = 0;
+	Time t = milliseconds(5);
+	paddle1.setPosition(Vector2f(2, 120));
+	paddle2.setPosition(Vector2f(window.getSize().x - 2 - paddle2.getSize().x, 120));
+	while (window.isOpen())
+	{
+		while (window.pollEvent(event))
+		{
+			if (event.type == Event::EventType::Closed)
+			{
+				window.close();
+			}
+		}
+		window.clear(Color::White); 
+		kruh.setPosition(x, 0);
+		window.draw(kruh);		
+		window.draw(paddle1);
+		if (Keyboard::isKeyPressed(Keyboard::Key::Up))
+		{
+			paddle2.setPosition(Vector2f(window.getSize().x - 2 - paddle2.getSize().x, paddle2.getPosition().y - 1));
+		}
+		if (Keyboard::isKeyPressed(Keyboard::Key::Down))
+		{
+			paddle2.setPosition(Vector2f(window.getSize().x - 2 - paddle2.getSize().x, paddle2.getPosition().y + 1));
+		}
+		window.draw(paddle2);
+		window.display();
+		x++;
+		sleep(t);
+
+	}
+}
+
 void Hra::kolizie()
 {
 	
