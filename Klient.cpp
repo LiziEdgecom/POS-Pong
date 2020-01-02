@@ -14,6 +14,19 @@ Klient::Klient()
 	{
 		cout << "Pripojene na server" << endl;
 	}
+	cout << "priradenie cisla hracovi" << endl;
+	char data[2];
+	size_t recieveddata = 0;
+	while (true)
+	{
+		if (socket.receive(data, 20, recieveddata) == sf::Socket::Done)
+		{
+			cout << "Server poslal: " << string(data) << endl;
+			cisHraca = data[1];
+		}
+	}
+	
+
 }
 
 Klient::~Klient()
@@ -114,11 +127,11 @@ void Klient::hra()
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::Up))
 		{
-			Posli("UP");
+			Posli(cisHraca + "UP");
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::Down))
 		{
-			Posli("DOWN");
+			Posli(cisHraca + "DOWN");
 		}
 		window.clear(Color::White);
 		kruh.setPosition(udaje[4], udaje[5]);
