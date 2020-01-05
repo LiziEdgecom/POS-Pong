@@ -5,7 +5,10 @@
 #include "Klient.h"
 #include <random>
 #include <time.h>
+#include <cstdio>
 int main(){	
+	
+
 	Klient* klient = new Klient();
 	if (!klient->getZlyhanie())
 	{
