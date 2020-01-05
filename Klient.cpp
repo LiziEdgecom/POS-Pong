@@ -55,6 +55,7 @@ void Klient::Citaj()
 	cout << "Klient pripraveny na citanie"<<endl;
 	while (true)
 	{
+		cout << "cakam" << endl;
 		if (socket.receive(data, 20, recieveddata) == sf::Socket::Done)
 		{
 			cout << "Server poslal: " << string(data) << endl;
