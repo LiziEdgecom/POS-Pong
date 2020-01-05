@@ -49,14 +49,14 @@ void Klient::Citaj()
 	s1 s2 score hracov
 	*/
 
-	char data[51];
+	char data[81];
 	string delimiter = "-";
 	size_t recieveddata = 0;
 	cout << "Klient pripraveny na citanie"<<endl;
 	while (true)
 	{
 		cout << "cakam" << endl;
-		if (socket.receive(data, 50, recieveddata) == sf::Socket::Done)
+		if (socket.receive(data, 80, recieveddata) == sf::Socket::Done)
 		{
 			cout << "Server poslal: " << string(data) << endl;
 
