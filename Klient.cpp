@@ -1,5 +1,6 @@
 #include "Klient.h"
 
+#include <cstdio>
 
 using namespace std;
 
@@ -135,12 +136,16 @@ void Klient::hra()
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::Up))
 		{
-			Posli(cisHraca + "U");
+			char sprava[50];
+			sprintf_s(sprava, "%aU", cisHraca);
+			Posli(sprava);
 		}
 		else {
 			if (Keyboard::isKeyPressed(Keyboard::Key::Down))
 			{
-				Posli(cisHraca + "D");
+				char sprava[50];
+				sprintf_s(sprava, "%aD", cisHraca);
+				Posli(sprava);
 			}
 			else {
 				Posli("nic");
@@ -158,7 +163,7 @@ void Klient::hra()
 		paddle2.setPosition(Vector2f(udaje[2], udaje[3]));
 		window.draw(paddle2);
 		window.display();
-		sleep(t);
+		//sleep(t);
 		
 	}
 }
