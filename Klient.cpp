@@ -24,6 +24,7 @@ Klient::Klient()
 			{
 				cout << "Server poslal: " << string(data) << endl;
 				cisHraca = data[0];
+				break;
 			}
 		}
 
