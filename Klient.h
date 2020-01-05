@@ -13,7 +13,7 @@ class Klient
 private:
 	sf::TcpSocket socket;
 	int udaje[10];
-	char cisHraca;
+	int cisHraca;
 	bool zlyhanie = false;
 
 public:

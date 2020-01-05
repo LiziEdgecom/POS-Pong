@@ -24,7 +24,7 @@ Klient::Klient()
 			if (socket.receive(data, 20, recieveddata) == sf::Socket::Done)
 			{
 				cout << "Server poslal: " << string(data) << endl;
-				cisHraca = data[0];
+				cisHraca = int(data[0]);
 				break;
 			}
 		}
@@ -136,15 +136,15 @@ void Klient::hra()
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::Up))
 		{
-			char sprava[50];
-			sprintf_s(sprava, "%aU", cisHraca);
+			char sprava[50] = "";
+			sprintf_s(sprava, "%d U", cisHraca);
 			Posli(sprava);
 		}
 		else {
 			if (Keyboard::isKeyPressed(Keyboard::Key::Down))
 			{
-				char sprava[50];
-				sprintf_s(sprava, "%aD", cisHraca);
+				char sprava[50]="";
+				sprintf_s(sprava, "%d D", cisHraca);
 				Posli(sprava);
 			}
 			else {
