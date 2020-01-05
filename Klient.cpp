@@ -42,7 +42,7 @@ Klient::~Klient()
 void Klient::Citaj()
 {
 	
-	/*format spravy    x1-y1-x2-y2-bx-by-s1-s2
+	/*format spravy    x1-y1-x2-y2-bx-by-s1-s2-
 	 - oddelovac
 	x1 y1 suradnice hraca 1
 	x2 y2 suradnice hraca 2
@@ -163,7 +163,7 @@ void Klient::hra()
 		paddle2.setPosition(Vector2f(udaje[2], udaje[3]));
 		window.draw(paddle2);
 		window.display();
-		//sleep(t);
+		sleep(t);
 		
 	}
 }
