@@ -123,8 +123,8 @@ void Klient::hra()
 	paddle2.setFillColor(Color::Black);
 	kruh.setFillColor(Color::Green);
 	Time t = milliseconds(5);
-	paddle1.setPosition(Vector2f(2, 120));
-	paddle2.setPosition(Vector2f(window.getSize().x - 2 - paddle2.getSize().x, 120));
+	paddle1.setPosition(Vector2f(2, 320));
+	paddle2.setPosition(Vector2f(window.getSize().x - 2 - paddle2.getSize().x, 320));
 	while (window.isOpen())
 	{		
 		while (window.pollEvent(event))
@@ -148,8 +148,15 @@ void Klient::hra()
 				Posli(sprava);
 			}
 			else {
-				Posli("nic");
+				if (Keyboard::isKeyPressed(Keyboard::Key::Q))
+				{
+					Posli("koniec");
+				}
+				else {
+					Posli("nic");
+				}
 			}
+			
 		}
 		
 		window.clear(Color::White);

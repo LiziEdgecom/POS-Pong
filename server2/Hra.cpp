@@ -20,13 +20,13 @@ Hra::Hra(int sirka, int vyska, Hrac* player1, Hrac* player2, Lopta * paLopta)
 
 void Hra::kolizie()
 {
-	
-	if (lopta->GetSurX()+10 == 783 && (lopta->GetSurY() >= hrac2->getPolohaY() && lopta->GetSurY() <= hrac2->getPolohaY() + 15) ) // ak sa lopta dotyka dosky hraca2
+
+	if (lopta->GetSurX() + 10 == 783 && (lopta->GetSurY() >= hrac2->getPolohaY() && lopta->GetSurY() <= hrac2->getPolohaY() + 100)) // ak sa lopta dotyka dosky hraca2
 	{
 		lopta->ZmenaSmeru((eSmer)((rand() % 3) + 4)); // nahodny smer smerom dolava
 	}
 
-	if (lopta->GetSurX() == 16 && (lopta->GetSurY() >= hrac2->getPolohaY() && lopta->GetSurY() <= hrac2->getPolohaY() + 15)) // ak sa lopta dotyka dosky hraca1
+	if (lopta->GetSurX() == 17 && (lopta->GetSurY() >= hrac1->getPolohaY() && lopta->GetSurY() <= hrac1->getPolohaY() + 100)) // ak sa lopta dotyka dosky hraca1
 	{
 		lopta->ZmenaSmeru((eSmer)((rand() % 3) + 1)); // nahodny smer smerom doprava
 	}
@@ -36,19 +36,19 @@ void Hra::kolizie()
 		lopta->GetSmer() == UPRIGHT ? lopta->ZmenaSmeru(DOWNRIGHT) : lopta->ZmenaSmeru(DOWNLEFT);
 	}
 
-	if (lopta->GetSurY() == vyskaPola-2-10)  // ak sa lopta dotkne dolnej steny
+	if (lopta->GetSurY() == vyskaPola - 2 - 10)  // ak sa lopta dotkne dolnej steny
 	{
 		lopta->GetSmer() == DOWNRIGHT ? lopta->ZmenaSmeru(UPRIGHT) : lopta->ZmenaSmeru(UPLEFT);
 	}
 
-	if (lopta->GetSurX()+10 == sirkaPola - 1 && !(lopta->GetSurY() >= hrac2->getPolohaY() && lopta->GetSurY() <= hrac2->getPolohaY() + 15)) // ak hrac2 nechyti loptu
+	if (lopta->GetSurX() + 10 == sirkaPola - 1 && !(lopta->GetSurY() >= hrac2->getPolohaY() && lopta->GetSurY() <= hrac2->getPolohaY() + 100)) // ak hrac2 nechyti loptu
 	{
 		hrac1->Score();
 		lopta->Reset();
 		lopta->ZmenaSmeru((eSmer)((rand() % 6) + 1));
 	}
 
-	if (lopta->GetSurX() == 1 && !(lopta->GetSurY() >= hrac2->getPolohaY() && lopta->GetSurY() <= hrac2->getPolohaY() + 15)) // ak hrac1 nechyti loptu
+	if (lopta->GetSurX() == 1 && !(lopta->GetSurY() >= hrac1->getPolohaY() && lopta->GetSurY() <= hrac1->getPolohaY() + 100)) // ak hrac1 nechyti loptu
 	{
 		hrac2->Score();
 		lopta->Reset();
@@ -82,14 +82,18 @@ void Hra::kolizie()
 		hrac2->setY(hrac2->getPolohaY() + 1);
 	}
 
-	if (hrac1->getPolohaY()+15 > vyskaPola-1)
+	if (hrac1->getPolohaY() + 100 > vyskaPola - 1)
 	{
 		hrac1->setY(hrac1->getPolohaY() - 1);
 	}
-	if (hrac2->getPolohaY()+15 > vyskaPola - 1)
+	if (hrac2->getPolohaY() + 100 > vyskaPola - 1)
 	{
 		hrac2->setY(hrac2->getPolohaY() - 1);
 	}
 
-}
+	if (koniec)
+	{
+		lopta->ZmenaSmeru(STOP);
+	}
 
+}

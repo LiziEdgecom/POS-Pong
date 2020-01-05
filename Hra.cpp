@@ -72,7 +72,7 @@ void Hra::vykreslenie()
 void Hra::zobrazenie()
 {
 	using namespace sf;
-	RenderWindow window(VideoMode(800, 400), "POS-PONG");
+	RenderWindow window(VideoMode(800, 640), "POS-PONG");
 	Event event;
 	CircleShape kruh(10);
 	RectangleShape paddle1(Vector2f(15,100));
@@ -80,12 +80,14 @@ void Hra::zobrazenie()
 	paddle1.setFillColor(Color::Black);
 	paddle2.setFillColor(Color::Black);
 	kruh.setFillColor(Color::Green);
-	int x = 0;
 	Time t = milliseconds(5);
-	paddle1.setPosition(Vector2f(2, 120));
-	paddle2.setPosition(Vector2f(window.getSize().x - 2 - paddle2.getSize().x, 120));
+	paddle1.setPosition(Vector2f(hrac1->getPolohaX(), hrac1->getPolohaY()));
+	paddle2.setPosition(Vector2f(hrac2->getPolohaX(), hrac2->getPolohaY()));
+	srand(time(NULL) + rand());
+	lopta->ZmenaSmeru((eSmer)((rand() % 6) + 1));
 	while (window.isOpen())
 	{
+		
 		while (window.pollEvent(event))
 		{
 			if (event.type == Event::EventType::Closed)
@@ -94,20 +96,33 @@ void Hra::zobrazenie()
 			}
 		}
 		window.clear(Color::White); 
-		kruh.setPosition(x, 0);
+		kruh.setPosition(lopta->GetSurX(), lopta->GetSurY());
 		window.draw(kruh);		
-		window.draw(paddle1);
 		if (Keyboard::isKeyPressed(Keyboard::Key::Up))
 		{
-			paddle2.setPosition(Vector2f(window.getSize().x - 2 - paddle2.getSize().x, paddle2.getPosition().y - 1));
+			hrac2->PohybHore();
+			paddle2.setPosition(Vector2f(hrac2->getPolohaX(), hrac2->getPolohaY()));
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::Down))
 		{
-			paddle2.setPosition(Vector2f(window.getSize().x - 2 - paddle2.getSize().x, paddle2.getPosition().y + 1));
+			hrac2->PohybDole();
+			paddle2.setPosition(Vector2f(hrac2->getPolohaX(), hrac2->getPolohaY()));
+		}
+		if (Keyboard::isKeyPressed(Keyboard::Key::W))
+		{
+			hrac1->PohybHore();
+			paddle1.setPosition(Vector2f(hrac1->getPolohaX(), hrac1->getPolohaY()));
+		}
+		if (Keyboard::isKeyPressed(Keyboard::Key::S))
+		{
+			hrac1->PohybDole();
+			paddle1.setPosition(Vector2f(hrac1->getPolohaX(), hrac1->getPolohaY()));
 		}
 		window.draw(paddle2);
+		window.draw(paddle1);		
 		window.display();
-		x++;
+		lopta->Pohyb();
+		kolizie();
 		sleep(t);
 
 	}
@@ -116,16 +131,12 @@ void Hra::zobrazenie()
 void Hra::kolizie()
 {
 	
-	if (lopta->GetSurX() == sirkaPola-3 && (lopta->GetSurY() == hrac2->getPolohaY() - 2 || lopta->GetSurY() == hrac2->getPolohaY() - 1 ||
-											lopta->GetSurY() == hrac2->getPolohaY() || lopta->GetSurY() == hrac2->getPolohaY() + 1 ||
-											lopta->GetSurY() == hrac2->getPolohaY() + 2) ) // ak sa lopta dotyka dosky hraca2
+	if (lopta->GetSurX() + 10 == 783 && (lopta->GetSurY() >= hrac2->getPolohaY() && lopta->GetSurY() <= hrac2->getPolohaY() + 100)) // ak sa lopta dotyka dosky hraca2
 	{
 		lopta->ZmenaSmeru((eSmer)((rand() % 3) + 4)); // nahodny smer smerom dolava
 	}
 
-	if (lopta->GetSurX() == 2 && (lopta->GetSurY() == hrac1->getPolohaY() - 2 || lopta->GetSurY() == hrac1->getPolohaY() - 1 ||
-							     lopta->GetSurY() == hrac1->getPolohaY() || lopta->GetSurY() == hrac1->getPolohaY() + 1 ||
-								lopta->GetSurY() == hrac1->getPolohaY() + 2)) // ak sa lopta dotyka dosky hraca1
+	if (lopta->GetSurX() == 17 && (lopta->GetSurY() >= hrac1->getPolohaY() && lopta->GetSurY() <= hrac1->getPolohaY() + 100)) // ak sa lopta dotyka dosky hraca1
 	{
 		lopta->ZmenaSmeru((eSmer)((rand() % 3) + 1)); // nahodny smer smerom doprava
 	}
@@ -135,36 +146,31 @@ void Hra::kolizie()
 		lopta->GetSmer() == UPRIGHT ? lopta->ZmenaSmeru(DOWNRIGHT) : lopta->ZmenaSmeru(DOWNLEFT);
 	}
 
-	if (lopta->GetSurY() == vyskaPola-2)  // ak sa lopta dotkne dolnej steny
+	if (lopta->GetSurY() == vyskaPola - 2 - 10)  // ak sa lopta dotkne dolnej steny
 	{
 		lopta->GetSmer() == DOWNRIGHT ? lopta->ZmenaSmeru(UPRIGHT) : lopta->ZmenaSmeru(UPLEFT);
 	}
 
-	if (lopta->GetSurX() == sirkaPola - 3 && !(lopta->GetSurY() == hrac2->getPolohaY() - 2 || lopta->GetSurY() == hrac2->getPolohaY() - 1 ||
-												lopta->GetSurY() == hrac2->getPolohaY() || lopta->GetSurY() == hrac2->getPolohaY() + 1 ||
-												lopta->GetSurY() == hrac2->getPolohaY() + 2)) // ak hrac2 nechyti loptu
+	if (lopta->GetSurX() + 10 == sirkaPola - 1 && !(lopta->GetSurY() >= hrac2->getPolohaY() && lopta->GetSurY() <= hrac2->getPolohaY() + 100)) // ak hrac2 nechyti loptu
 	{
 		hrac1->Score();
 		lopta->Reset();
-		vykreslenie();
 		lopta->ZmenaSmeru((eSmer)((rand() % 6) + 1));
 	}
 
-	if (lopta->GetSurX() == 2 && !(lopta->GetSurY() == hrac1->getPolohaY() - 2 || lopta->GetSurY() == hrac1->getPolohaY() - 1 ||
-								lopta->GetSurY() == hrac1->getPolohaY() || lopta->GetSurY() == hrac1->getPolohaY() + 1 ||
-								lopta->GetSurY() == hrac1->getPolohaY() + 2)) // ak hrac1 nechyti loptu
+	if (lopta->GetSurX() == 1 && !(lopta->GetSurY() >= hrac1->getPolohaY() && lopta->GetSurY() <= hrac1->getPolohaY() + 100)) // ak hrac1 nechyti loptu
 	{
 		hrac2->Score();
 		lopta->Reset();
-		vykreslenie();
 		lopta->ZmenaSmeru((eSmer)((rand() % 6) + 1));
 	}
 
+
+	//ak nahodou prejde mimo plan
 	if (lopta->GetSurX() >= sirkaPola)
 	{
 		hrac1->Score();
 		lopta->Reset();
-		vykreslenie();
 		lopta->ZmenaSmeru((eSmer)((rand() % 6) + 1));
 	}
 
@@ -172,26 +178,25 @@ void Hra::kolizie()
 	{
 		hrac2->Score();
 		lopta->Reset();
-		vykreslenie();
 		lopta->ZmenaSmeru((eSmer)((rand() % 6) + 1));
 	}
 
 
-	//osetrenie aby dosky nepresli do steny
-	if (hrac1->getPolohaY() < 3)
+	//osetrenie aby hraci nepresli do steny
+	if (hrac1->getPolohaY() < 1)
 	{
 		hrac1->setY(hrac1->getPolohaY() + 1);
 	}
-	if (hrac2->getPolohaY() < 3)
+	if (hrac2->getPolohaY() < 1)
 	{
 		hrac2->setY(hrac2->getPolohaY() + 1);
 	}
 
-	if (hrac1->getPolohaY() > vyskaPola-4)
+	if (hrac1->getPolohaY() + 100 > vyskaPola - 1)
 	{
 		hrac1->setY(hrac1->getPolohaY() - 1);
 	}
-	if (hrac2->getPolohaY() > vyskaPola - 4)
+	if (hrac2->getPolohaY() + 100 > vyskaPola - 1)
 	{
 		hrac2->setY(hrac2->getPolohaY() - 1);
 	}
