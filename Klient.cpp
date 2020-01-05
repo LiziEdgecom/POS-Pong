@@ -52,6 +52,7 @@ void Klient::Citaj()
 	char data[21];
 	string delimiter = "-";
 	size_t recieveddata = 0;
+	cout << "Klient pripraveny na citanie"<<endl;
 	while (true)
 	{
 		if (socket.receive(data, 20, recieveddata) == sf::Socket::Done)
@@ -73,7 +74,8 @@ void Klient::Citaj()
 			for (int i = 0; i < 8; i++)
 			{
 				udaje[i] = stoi(res[i]);
-			}			
+			}	
+			break;
 		}
 	}
 }
@@ -149,7 +151,7 @@ void Klient::hra()
 		sleep(t);
 		cout << "cita udaje" << endl;
 		Citaj();
-
+		cout << "udaje nacitane" << endl;
 	}
 }
 
