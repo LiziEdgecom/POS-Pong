@@ -148,6 +148,9 @@ void Klient::hra()
 		}
 		
 		window.clear(Color::White);
+		cout << "cita udaje" << endl;
+		Citaj();
+		cout << "udaje nacitane" << endl;
 		kruh.setPosition(udaje[4], udaje[5]);
 		window.draw(kruh);
 		paddle1.setPosition(Vector2f(udaje[0], udaje[1]));
@@ -156,9 +159,7 @@ void Klient::hra()
 		window.draw(paddle2);
 		window.display();
 		sleep(t);
-		cout << "cita udaje" << endl;
-		Citaj();
-		cout << "udaje nacitane" << endl;
+		
 	}
 }
 
