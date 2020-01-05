@@ -137,10 +137,16 @@ void Klient::hra()
 		{
 			Posli(cisHraca + "U");
 		}
-		if (Keyboard::isKeyPressed(Keyboard::Key::Down))
-		{
-			Posli(cisHraca + "D");
+		else {
+			if (Keyboard::isKeyPressed(Keyboard::Key::Down))
+			{
+				Posli(cisHraca + "D");
+			}
+			else {
+				Posli("nic");
+			}
 		}
+		
 		window.clear(Color::White);
 		kruh.setPosition(udaje[4], udaje[5]);
 		window.draw(kruh);
