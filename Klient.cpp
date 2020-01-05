@@ -8,23 +8,27 @@ Klient::Klient()
 {
 	if (socket.connect(server, PORT) != sf::TcpSocket::Done)
 	{
-		cout << "Zlyhanie pri pripojeni na server" << endl;
+		cout << "Zlyhanie pri pripojeni na server" << endl;		
+		zlyhanie = true;
 	}
 	else
 	{
 		cout << "Pripojene na server" << endl;
-	}
-	cout << "priradenie cisla hracovi" << endl;
-	char data[2];
-	size_t recieveddata = 0;
-	while (true)
-	{
-		if (socket.receive(data, 20, recieveddata) == sf::Socket::Done)
+
+		cout << "priradenie cisla hracovi" << endl;
+		char data[21];
+		size_t recieveddata = 0;
+		while (true)
 		{
-			cout << "Server poslal: " << string(data) << endl;
-			cisHraca = data[1];
+			if (socket.receive(data, 20, recieveddata) == sf::Socket::Done)
+			{
+				cout << "Server poslal: " << string(data) << endl;
+				cisHraca = data[0];
+			}
 		}
+
 	}
+	
 	
 
 }
@@ -36,14 +40,12 @@ Klient::~Klient()
 void Klient::Citaj()
 {
 	
-	/*format spravy    x1-y1-x2-y2-bx-by-s1-s2-W-H
+	/*format spravy    x1-y1-x2-y2-bx-by-s1-s2
 	 - oddelovac
 	x1 y1 suradnice hraca 1
 	x2 y2 suradnice hraca 2
 	bx by suradnice lopty
 	s1 s2 score hracov
-	H - vyska hracieho pola
-	W - sirka hracieho pola
 	*/
 
 	char data[21];
@@ -100,12 +102,14 @@ void Klient::hra()
 	udaje[5] by
 	udaje[6] s1
 	udaje[7] s2
-	udaje[8] sirka
-	udaje[9] vyska
 	*/
-	Citaj();
 	using namespace sf;
-	RenderWindow window(VideoMode(udaje[8], udaje[9]), "POS-PONG");
+	int i = 1;
+
+	string s = "" + i ;
+	s += "" + i;
+	cout << "otvaranie hry" << endl;
+	RenderWindow window(VideoMode(800, 640), "POS-PONG");
 	Event event;
 	CircleShape kruh(10);
 	RectangleShape paddle1(Vector2f(15, 100));
@@ -127,11 +131,11 @@ void Klient::hra()
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::Up))
 		{
-			Posli(cisHraca + "UP");
+			Posli(cisHraca + "U");
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::Down))
 		{
-			Posli(cisHraca + "DOWN");
+			Posli(cisHraca + "D");
 		}
 		window.clear(Color::White);
 		kruh.setPosition(udaje[4], udaje[5]);
@@ -142,6 +146,7 @@ void Klient::hra()
 		window.draw(paddle2);
 		window.display();
 		sleep(t);
+		cout << "cita udaje" << endl;
 		Citaj();
 
 	}

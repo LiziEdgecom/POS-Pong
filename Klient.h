@@ -14,10 +14,12 @@ private:
 	sf::TcpSocket socket;
 	int udaje[10];
 	char cisHraca;
+	bool zlyhanie = false;
 
 public:
 	Klient();
 	~Klient();
+	bool getZlyhanie() { return zlyhanie; };
 	void Citaj();
 	void Posli(string sprava);
 	void hra();
