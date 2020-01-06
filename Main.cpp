@@ -14,7 +14,7 @@ int main(){
 	{
 		klient->hra();
 	}
-	
+
 	//int sirka = 800;
 	//int vyska = 640;
 	//Hrac* hrac1 = new Hrac(2,315,"andrej");
