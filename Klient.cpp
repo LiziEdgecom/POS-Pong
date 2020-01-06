@@ -108,7 +108,7 @@ void Klient::hra()
 	udaje[6] s1
 	udaje[7] s2
 	*/
-	thread citanie(&Citaj);
+	thread citanie(&Klient::Citaj, this);
 
 	using namespace sf;
 	int i = 1;
