@@ -154,6 +154,9 @@ void Klient::hra()
 				{
 					Posli("koniec");
 				}
+				else {
+					Posli("nic");
+				}
 			}
 			
 		}
