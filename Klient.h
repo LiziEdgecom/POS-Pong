@@ -3,6 +3,7 @@
 #include <string>
 #include <SFML/Network.hpp>
 #include <SFML/Graphics.hpp>
+#include <thread>
 
 #define server "frios2.fri.uniza.sk"	
 #define PORT 12356	

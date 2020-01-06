@@ -108,6 +108,8 @@ void Klient::hra()
 	udaje[6] s1
 	udaje[7] s2
 	*/
+	thread citanie(&Citaj);
+
 	using namespace sf;
 	int i = 1;
 
@@ -158,7 +160,7 @@ void Klient::hra()
 		
 		window.clear(Color::White);
 		cout << "cita udaje" << endl;
-		Citaj();
+		//Citaj();
 		cout << "udaje nacitane" << endl;
 		kruh.setPosition(udaje[4], udaje[5]);
 		window.draw(kruh);
@@ -167,8 +169,8 @@ void Klient::hra()
 		paddle2.setPosition(Vector2f(udaje[2], udaje[3]));
 		window.draw(paddle2);
 		window.display();
-		sleep(t);
-		
+		sleep(t);		
 	}
+	citanie.join();
 }
 
