@@ -15,7 +15,7 @@ class Klient
 private:
 	std::mutex mtx;
 	sf::TcpSocket socket;
-	int udaje[10];
+	int udaje[8];
 	int cisHraca;
 	bool zlyhanie = false;
 
