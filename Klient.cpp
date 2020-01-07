@@ -49,19 +49,18 @@ void Klient::Citaj()
 	bx by suradnice lopty
 	s1 s2 score hracov
 	*/
-	
-		string delimiter = "-";
-		size_t recieveddata = 0;
-		char data[81];
-		cout << "Klient pripraveny na citanie" << endl;
-		while (true)
+    string delimiter = "-";
+	size_t recieveddata = 0;
+	char data[81];
+	cout << "Klient pripraveny na citanie"<<endl;
+	while (true)
+	{   
+		
+	    
+		cout << "cakam" << endl;
+		if (socket.receive(data, 80, recieveddata) == sf::Socket::Done)
 		{
-
-
-			cout << "cakam" << endl;
-			if (socket.receive(data, 80, recieveddata) == sf::Socket::Done)
-			{
-				cout << "Server poslal: " << string(data) << endl;
+			cout << "Server poslal: " << string(data) << endl;
 
 				//rozdelenie stringu
 				size_t pos_start = 0, pos_end, delim_len = delimiter.length();
@@ -74,19 +73,16 @@ void Klient::Citaj()
 					res.push_back(slovo);
 				}
 
-				res.push_back(string(data).substr(pos_start));
-				//mtx.lock();
-				for (int i = 0; i < 8; i++)
-				{
-					udaje[i] = stoi(res[i]);
-				}
-				//mtx.unlock();
-				//std::fill_n(data, 81, 0);
-				break;
-			}
+			res.push_back(string(data).substr(pos_start));
+			//mtx.lock;
+			for (int i = 0; i < 8; i++)
+			{
+				udaje[i] = stoi(res[i]);
+			}	
+			//mtx.unlock;
+			//std::fill_n(data, 81, 0);
 		}
-	
-    
+	}
 }
 
 void Klient::Posli(string sprava)
@@ -209,13 +205,17 @@ void Klient::hra()
 		cout << "cita udaje" << endl;
 		Citaj();
 		cout << "udaje nacitane" << endl;
-		//mtx.lock();
+		//mtx.lock;
 		kruh.setPosition(udaje[4], udaje[5]);
+		
 		window.draw(kruh);
+	
 		paddle1.setPosition(Vector2f(udaje[0], udaje[1]));
+		
 		window.draw(paddle1);
+		
 		paddle2.setPosition(Vector2f(udaje[2], udaje[3]));
-		//mtx.unlock();
+		//mtx.unlock;
 		window.draw(paddle2);
 		window.display();
 		sleep(t);		
