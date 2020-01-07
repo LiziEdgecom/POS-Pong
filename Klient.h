@@ -1,6 +1,5 @@
 #pragma once
 #include <iostream>
-#include <string.h>
 #include <SFML/Network.hpp>
 #include <SFML/Graphics.hpp>
 #include <thread>
@@ -25,6 +24,7 @@ public:
 	bool getZlyhanie() { return zlyhanie; };
 	void Citaj();
 	void Posli(string sprava);
+	void Posielanie();
 	void hra();
 };
 

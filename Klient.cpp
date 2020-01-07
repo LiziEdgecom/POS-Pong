@@ -49,39 +49,44 @@ void Klient::Citaj()
 	bx by suradnice lopty
 	s1 s2 score hracov
 	*/
-    string delimiter = "-";
-	char data[81];
-	cout << "Klient pripraveny na citanie"<<endl;
-	while (true)
-	{   
-		
-	    size_t recieveddata = 0;
-		cout << "cakam" << endl;
-		if (socket.receive(data, 80, recieveddata) == sf::Socket::Done)
+	
+		string delimiter = "-";
+		size_t recieveddata = 0;
+		char data[81];
+		cout << "Klient pripraveny na citanie" << endl;
+		while (true)
 		{
-			cout << "Server poslal: " << string(data) << endl;
 
-			//rozdelenie stringu
-			size_t pos_start = 0, pos_end, delim_len = delimiter.length();
-			string slovo;
-			vector<string> res;
 
-			while ((pos_end = string(data).find(delimiter, pos_start)) != string::npos) {
-				slovo = string(data).substr(pos_start, pos_end - pos_start);
-				pos_start = pos_end + delim_len;
-				res.push_back(slovo);
-			}
-
-			res.push_back(string(data).substr(pos_start));
-			mtx.lock;
-			for (int i = 0; i < 8; i++)
+			cout << "cakam" << endl;
+			if (socket.receive(data, 80, recieveddata) == sf::Socket::Done)
 			{
-				udaje[i] = stoi(res[i]);
-			}	
-			mtx.unlock;
-			std::fill_n(data, 81, 0);
+				cout << "Server poslal: " << string(data) << endl;
+
+				//rozdelenie stringu
+				size_t pos_start = 0, pos_end, delim_len = delimiter.length();
+				string slovo;
+				vector<string> res;
+
+				while ((pos_end = string(data).find(delimiter, pos_start)) != string::npos) {
+					slovo = string(data).substr(pos_start, pos_end - pos_start);
+					pos_start = pos_end + delim_len;
+					res.push_back(slovo);
+				}
+
+				res.push_back(string(data).substr(pos_start));
+				//mtx.lock();
+				for (int i = 0; i < 8; i++)
+				{
+					udaje[i] = stoi(res[i]);
+				}
+				//mtx.unlock();
+				//std::fill_n(data, 81, 0);
+				break;
+			}
 		}
-	}
+	
+    
 }
 
 void Klient::Posli(string sprava)
@@ -94,6 +99,45 @@ void Klient::Posli(string sprava)
 	else
 	{
 		cout << "Odoslane serveru: " << sprava << endl;
+	}
+}
+
+void Klient::Posielanie()
+{
+
+	using namespace sf;
+	Event event;
+	while (true)
+	{
+		
+		if (Keyboard::isKeyPressed(Keyboard::Key::Up))
+		{
+			char sprava[50] = "";
+			sprintf_s(sprava, "%d U", cisHraca);
+			Posli(sprava);
+		}
+		else {
+			if (Keyboard::isKeyPressed(Keyboard::Key::Down))
+			{
+				char sprava[50] = "";
+				sprintf_s(sprava, "%d D", cisHraca);
+				Posli(sprava);
+			}
+			else {
+				if (Keyboard::isKeyPressed(Keyboard::Key::Q))
+				{
+					Posli("koniec");
+					break;
+				}
+				else {
+					Posli("nic");
+
+				}
+			}
+
+		}
+
+	
 	}
 }
 
@@ -110,15 +154,12 @@ void Klient::hra()
 	udaje[6] s1
 	udaje[7] s2
 	*/
-	thread citanie(&Klient::Citaj, this);
+	
 
-	using namespace sf;
-	int i = 1;
-
-	string s = "" + i ;
-	s += "" + i;
+	using namespace sf;	
 	cout << "otvaranie hry" << endl;
 	RenderWindow window(VideoMode(800, 640), "POS-PONG");
+	thread citanie(&Klient::Posielanie, this);
 	Event event;
 	CircleShape kruh(10);
 	RectangleShape paddle1(Vector2f(15, 100));
@@ -138,7 +179,7 @@ void Klient::hra()
 				window.close();
 			}
 		}
-		if (Keyboard::isKeyPressed(Keyboard::Key::Up))
+		/*if (Keyboard::isKeyPressed(Keyboard::Key::Up))
 		{
 			char sprava[50] = "";
 			sprintf_s(sprava, "%d U", cisHraca);
@@ -162,19 +203,19 @@ void Klient::hra()
 				}
 			}
 			
-		}
+		}*/
 		
 		window.clear(Color::White);
 		cout << "cita udaje" << endl;
-		//Citaj();
+		Citaj();
 		cout << "udaje nacitane" << endl;
-		mtx.lock;
+		//mtx.lock();
 		kruh.setPosition(udaje[4], udaje[5]);
 		window.draw(kruh);
 		paddle1.setPosition(Vector2f(udaje[0], udaje[1]));
 		window.draw(paddle1);
 		paddle2.setPosition(Vector2f(udaje[2], udaje[3]));
-		mtx.unlock;
+		//mtx.unlock();
 		window.draw(paddle2);
 		window.display();
 		sleep(t);		
