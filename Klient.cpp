@@ -38,7 +38,7 @@ Klient::~Klient()
 
 void Klient::Citaj()
 {
-	
+
 	/*format spravy    x1-y1-x2-y2-bx-by-s1-s2-
 	 - oddelovac
 	x1 y1 suradnice hraca 1
@@ -46,47 +46,41 @@ void Klient::Citaj()
 	bx by suradnice lopty
 	s1 s2 score hracov
 	*/
-    string delimiter = "-";
+	string delimiter = "-";
 	size_t recieveddata = 0;
-	cout << "Klient pripraveny na citanie"<<endl;
+	cout << "Klient pripraveny na citanie" << endl;
 	char data[80];
 	while (true)
 	{
-
-	
-	
-	
-	while (true)
-	{   
-		
-		cout << "cakam" << endl;
-		if (socket.receive(data, 80, recieveddata) == sf::Socket::Done)
+		while (true)
 		{
-			cout << "Server poslal: " << string(data) << endl;
+
+			cout << "cakam" << endl;
+			if (socket.receive(data, 80, recieveddata) == sf::Socket::Done)
+			{
+				cout << "Server poslal: " << string(data) << endl;
 
 				//rozdelenie stringu
-				size_t pos_start = 0, pos_end, delim_len = delimiter.length();
-				string slovo;
-				vector<string> res;
-
-				while ((pos_end = string(data).find(delimiter, pos_start)) != string::npos) {
-					slovo = string(data).substr(pos_start, pos_end - pos_start);
-					pos_start = pos_end + delim_len;
-					printf("%s", slovo);
-					res.push_back(slovo);
+				size_t pos = 0;
+				string s = data;
+				string token;
+				int i = 0;
+				while ((pos = s.find(delimiter)) != std::string::npos) {
+					token = s.substr(0, pos);
+					udaje[i] = stoi(token);
+					s.erase(0, pos + delimiter.length());
+					i++;
 				}
-
-			res.push_back(string(data).substr(pos_start));
-			mtx.lock();
-			for (int i = 0; i < 8; i++)
-			{
-				udaje[i] = stoi(res[i]);
-			}	
-			mtx.unlock();
-			std::fill_n(data, 81, 0);
-			break;
+				/*mtx.lock();
+				for (int i = 0; i < 8; i++)
+				{
+					udaje[i] = int(s[i]);
+				}
+				mtx.unlock();*/
+				std::fill_n(data, 81, 0);
+				break;
+			}
 		}
-	}
 	}
 }
 
@@ -120,9 +114,9 @@ void Klient::hra()
 	udaje[6] s1
 	udaje[7] s2
 	*/
-	
 
-	using namespace sf;	
+
+	using namespace sf;
 	cout << "otvaranie hry" << endl;
 	RenderWindow window(VideoMode(800, 640), "POS-PONG");
 
@@ -139,7 +133,7 @@ void Klient::hra()
 	paddle1.setPosition(Vector2f(2, 320));
 	paddle2.setPosition(Vector2f(window.getSize().x - 2 - paddle2.getSize().x, 320));
 	while (window.isOpen())
-	{		
+	{
 		while (window.pollEvent(event))
 		{
 			if (event.type == Event::EventType::Closed)
@@ -156,7 +150,7 @@ void Klient::hra()
 		else {
 			if (Keyboard::isKeyPressed(Keyboard::Key::Down))
 			{
-				char sprava[50]="";
+				char sprava[50] = "";
 				sprintf_s(sprava, "%d D", cisHraca);
 				Posli(sprava);
 			}
@@ -170,27 +164,22 @@ void Klient::hra()
 
 				}
 			}
-			
+
 		}
-		
+
 		window.clear(Color::White);
-		cout << "cita udaje" << endl;
-		Citaj();
-		cout << "udaje nacitane" << endl;
+		//cout << "cita udaje" << endl;
+		//cout << "udaje nacitane" << endl;
 		mtx.lock();
 		kruh.setPosition(udaje[4], udaje[5]);
-		
 		window.draw(kruh);
-	
 		paddle1.setPosition(Vector2f(udaje[0], udaje[1]));
-		
 		window.draw(paddle1);
-		
 		paddle2.setPosition(Vector2f(udaje[2], udaje[3]));
 		mtx.unlock();
 		window.draw(paddle2);
 		window.display();
-		sleep(t);		
+		sleep(t);
 	}
 	citanie.join();
 }
