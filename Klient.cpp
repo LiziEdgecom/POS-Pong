@@ -56,7 +56,6 @@ void Klient::Citaj()
 	while (true)
 	{   
 		
-	    
 		cout << "cakam" << endl;
 		if (socket.receive(data, 80, recieveddata) == sf::Socket::Done)
 		{
@@ -81,6 +80,7 @@ void Klient::Citaj()
 			}	
 			//mtx.unlock;
 			//std::fill_n(data, 81, 0);
+			break;
 		}
 	}
 }
@@ -96,6 +96,9 @@ void Klient::Posli(string sprava)
 	{
 		cout << "Odoslane serveru: " << sprava << endl;
 	}
+
+	sf::Time t = sf::milliseconds(2);
+	sf::sleep(t);
 }
 
 void Klient::Posielanie()
