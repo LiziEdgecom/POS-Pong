@@ -19,6 +19,7 @@ private:
 	int udaje[8];
 	int cisHraca;
 	bool zlyhanie = false;
+	bool hraBezi = true;
 
 public:
 	Klient();

@@ -1,5 +1,4 @@
 #include "Klient.h"
-
 #include <cstdio>
 
 using namespace std;
@@ -28,12 +27,14 @@ Klient::Klient()
 				break;
 			}
 		}
+		delete data;
 
 	}
 }
 
 Klient::~Klient()
 {
+	delete udaje;
 	mtx.~mutex();
 	socket.~TcpSocket();
 }
@@ -48,11 +49,11 @@ void Klient::Citaj()
 	bx by suradnice lopty
 	s1 s2 score hracov
 	*/
-	
+
 	size_t recieveddata = 0;
 	cout << "Klient pripraveny na citanie" << endl;
 	char data[50];
-	while (true)
+	while (hraBezi)
 	{
 		while (true)
 		{
@@ -73,15 +74,16 @@ void Klient::Citaj()
 					pos = s.find(delimiter);
 					token = s.substr(0, pos);
 					udaje[i] = stoi(token);
-					s.erase(0, pos + delimiter.length());					
+					s.erase(0, pos + delimiter.length());
 				}
 				mtx.unlock();
-				
+
 				break;
-			}
 			}
 		}
 	}
+	delete data;
+}
 
 
 void Klient::Posli(string sprava)
@@ -96,8 +98,8 @@ void Klient::Posli(string sprava)
 		cout << "Odoslane serveru: " << sprava << endl;
 	}
 
-	sf::Time t = sf::milliseconds(2);
-	sf::sleep(t);
+	/*sf::Time t = sf::milliseconds(2);
+	sf::sleep(t);*/
 }
 
 
@@ -158,10 +160,15 @@ void Klient::hra()
 				if (Keyboard::isKeyPressed(Keyboard::Key::Q))
 				{
 					Posli("koniec");
+					hraBezi = false;
+					citanie.join();
+					cout << "Koniec hry!" << endl;
 				}
 				else {
-					Posli("Cakam na hraca");
-
+					if (hraBezi)
+					{
+						Posli("Cakam na hraca");
+					}
 				}
 			}
 
@@ -179,7 +186,7 @@ void Klient::hra()
 		window.display();
 		sleep(t);
 	}
-	citanie.join();
+	
 	citanie.~thread();	
 
 
