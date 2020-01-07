@@ -25,7 +25,6 @@ public:
 	bool getZlyhanie() { return zlyhanie; };
 	void Citaj();
 	void Posli(string sprava);
-	void Posielanie();
 	void hra();
 };
 
