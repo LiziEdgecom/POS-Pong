@@ -36,6 +36,7 @@ Klient::~Klient()
 {
 	delete udaje;
 	mtx.~mutex();
+	socket.disconnect();
 	socket.~TcpSocket();
 }
 
