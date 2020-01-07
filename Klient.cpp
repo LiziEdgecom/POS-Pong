@@ -56,14 +56,20 @@ void Klient::Citaj()
 		{
 
 			cout << "cakam" << endl;
-			if (socket.receive(data, 49, recieveddata) == sf::Socket::Done)
-			{
+			if (socket.receive(data, 49, recieveddata) != sf::Socket::Done) {
+				break;
+			}
+				else{
+				
+				
+			
 				cout << "Server poslal: " << string(data) << endl;
 
 				//rozdelenie stringu
 				size_t pos = 0;
 				string s = data;
 				string token;
+				mtx.lock();
 				for (int i = 0; i < 8; i++)
 				{
 					pos = s.find("-");
@@ -71,6 +77,7 @@ void Klient::Citaj()
 					udaje[i] = stoi(token);
 					s.erase(0, pos + 1);					
 				}
+				mtx.unlock();
 					
 				
 				/*mtx.lock();
@@ -82,9 +89,10 @@ void Klient::Citaj()
 				std::fill_n(data, 81, 0);
 				break;
 			}
+			}
 		}
 	}
-}
+
 
 void Klient::Posli(string sprava)
 {
@@ -172,13 +180,13 @@ void Klient::hra()
 		window.clear(Color::White);
 		//cout << "cita udaje" << endl;
 		//cout << "udaje nacitane" << endl;
-		//mtx.lock();
+		mtx.lock();
 		kruh.setPosition(udaje[4], udaje[5]);
 		window.draw(kruh);
 		paddle1.setPosition(Vector2f(udaje[0], udaje[1]));
 		window.draw(paddle1);
 		paddle2.setPosition(Vector2f(udaje[2], udaje[3]));
-		//mtx.unlock();
+		mtx.unlock();
 		window.draw(paddle2);
 		window.display();
 		sleep(t);
