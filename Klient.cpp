@@ -50,8 +50,10 @@ void Klient::Citaj()
 	s1 s2 score hracov
 	*/
     string delimiter = "-";
+	
 	char data[81];
 	cout << "Klient pripraveny na citanie"<<endl;
+
 	while (true)
 	{   
 		
