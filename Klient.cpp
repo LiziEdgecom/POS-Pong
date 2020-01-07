@@ -35,7 +35,7 @@ Klient::Klient()
 Klient::~Klient()
 {
 	mtx.~mutex();
-
+	socket.~TcpSocket();
 }
 
 void Klient::Citaj()
