@@ -49,7 +49,7 @@ void Klient::Citaj()
 	
 	size_t recieveddata = 0;
 	cout << "Klient pripraveny na citanie" << endl;
-	char data[80];
+	char data[50];
 	while (true)
 	{
 		while (true)
@@ -64,8 +64,10 @@ void Klient::Citaj()
 				size_t pos = 0;
 				string s = data;
 				string token;
+				string delimiter = "-";
 				for (int i = 0; i < 8; i++)
 				{
+					pos = s.find(delimiter);
 					token = s.substr(0, pos);
 					udaje[i] = stoi(token);
 					s.erase(0, pos + delimiter.length());					
@@ -78,7 +80,7 @@ void Klient::Citaj()
 					udaje[i] = int(s[i]);
 				}
 				mtx.unlock();*/
-				std::fill_n(data, 81, 0);
+				//std::fill_n(data, 81, 0);
 				break;
 			}
 			}
