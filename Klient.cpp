@@ -27,17 +27,18 @@ Klient::Klient()
 				break;
 			}
 		}
-		delete data;
+		
 
 	}
 }
 
 Klient::~Klient()
 {
-	delete udaje;
+	
 	mtx.~mutex();
 	socket.disconnect();
 	socket.~TcpSocket();
+	cout << "klient odpojeny" << endl;
 }
 
 void Klient::Citaj()
@@ -83,7 +84,7 @@ void Klient::Citaj()
 			}
 		}
 	}
-	delete data;
+	
 }
 
 
@@ -99,8 +100,8 @@ void Klient::Posli(string sprava)
 		cout << "Odoslane serveru: " << sprava << endl;
 	}
 
-	/*sf::Time t = sf::milliseconds(2);
-	sf::sleep(t);*/
+	sf::Time t = sf::milliseconds(2);
+	sf::sleep(t);
 }
 
 
@@ -160,10 +161,12 @@ void Klient::hra()
 			else {
 				if (Keyboard::isKeyPressed(Keyboard::Key::Q))
 				{
-					Posli("koniec");
-					hraBezi = false;
-					citanie.join();
-					cout << "Koniec hry!" << endl;
+					if (hraBezi)
+					{
+						Posli("koniec");
+						hraBezi = false;
+						cout << "Koniec hry!" << endl;
+					}
 				}
 				else {
 					if (hraBezi)
@@ -187,7 +190,7 @@ void Klient::hra()
 		window.display();
 		sleep(t);
 	}
-	
+	citanie.join();
 	citanie.~thread();	
 
 
