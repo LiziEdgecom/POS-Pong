@@ -1,4 +1,4 @@
-#include "Main.h"
+
 #include "Hrac.h"
 #include "Lopta.h"
 #include "Hra.h"
