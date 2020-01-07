@@ -36,6 +36,7 @@ Klient::~Klient()
 {
 	
 	mtx.~mutex();
+	sf::sleep(wait);
 	socket.disconnect();
 	socket.~TcpSocket();
 	cout << "klient odpojeny" << endl;
@@ -172,7 +173,8 @@ void Klient::hra()
 				{
 					if (hraBezi)
 					{
-						Posli("koniec");
+						wait = milliseconds(0);
+						Posli("koniec");						
 						cout << "Koniec hry!" << endl;
 					}
 				}

@@ -16,6 +16,7 @@ class Klient
 private:
 	std::mutex mtx;
 	sf::TcpSocket socket;
+	sf::Time wait = sf::milliseconds(100);
 	int udaje[8];
 	int cisHraca;
 	bool zlyhanie = false;
