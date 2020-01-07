@@ -66,6 +66,7 @@ void Klient::Citaj()
 				string token;
 				for (int i = 0; i < 8; i++)
 				{
+					pos = s.find(delimiter);
 					token = s.substr(0, pos);
 					udaje[i] = stoi(token);
 					s.erase(0, pos + delimiter.length());					
