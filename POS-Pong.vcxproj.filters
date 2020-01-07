@@ -53,5 +53,8 @@
     <ClInclude Include="Vstup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="D:\Andrej\škola\FRI UNIZA\udajovky\AUS\structures\heap_monitor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

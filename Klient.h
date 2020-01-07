@@ -1,4 +1,5 @@
 #pragma once
+#include "heap_monitor.h"
 #include <iostream>
 #include <string>
 #include <SFML/Network.hpp>

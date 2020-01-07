@@ -34,6 +34,8 @@ Klient::Klient()
 
 Klient::~Klient()
 {
+	mtx.~mutex();
+
 }
 
 void Klient::Citaj()
@@ -178,5 +180,8 @@ void Klient::hra()
 		sleep(t);
 	}
 	citanie.join();
+	citanie.~thread();	
+
+
 }
 

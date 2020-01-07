@@ -9,12 +9,13 @@
 
 int main(){	
 	
-
+	initHeapMonitor();
 	Klient* klient = new Klient();
 	if (!klient->getZlyhanie())
 	{
 		klient->hra();
 	}
+	delete klient;
 
 	//int sirka = 800;
 	//int vyska = 640;

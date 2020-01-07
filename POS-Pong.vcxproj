@@ -137,6 +137,7 @@
     <ClCompile Include="Vstup.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="D:\Andrej\škola\FRI UNIZA\udajovky\AUS\structures\heap_monitor.h" />
     <ClInclude Include="Hra.h" />
     <ClInclude Include="Hrac.h" />
     <ClInclude Include="Klient.h" />
