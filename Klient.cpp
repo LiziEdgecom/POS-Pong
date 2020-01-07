@@ -65,6 +65,7 @@ void Klient::Citaj()
 				string s = data;
 				string token;
 				string delimiter = "-";
+				mtx.lock();
 				for (int i = 0; i < 8; i++)
 				{
 					pos = s.find(delimiter);
@@ -72,15 +73,8 @@ void Klient::Citaj()
 					udaje[i] = stoi(token);
 					s.erase(0, pos + delimiter.length());					
 				}
-					
+				mtx.unlock();
 				
-				/*mtx.lock();
-				for (int i = 0; i < 8; i++)
-				{
-					udaje[i] = int(s[i]);
-				}
-				mtx.unlock();*/
-				//std::fill_n(data, 81, 0);
 				break;
 			}
 			}
@@ -164,7 +158,7 @@ void Klient::hra()
 					Posli("koniec");
 				}
 				else {
-					Posli("nic");
+					Posli("Cakam na hraca");
 
 				}
 			}
@@ -172,8 +166,6 @@ void Klient::hra()
 		}
 
 		window.clear(Color::White);
-		//cout << "cita udaje" << endl;
-		//cout << "udaje nacitane" << endl;
 		mtx.lock();
 		kruh.setPosition(udaje[4], udaje[5]);
 		window.draw(kruh);
