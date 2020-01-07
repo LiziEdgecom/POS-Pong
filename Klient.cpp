@@ -30,9 +30,6 @@ Klient::Klient()
 		}
 
 	}
-	
-	
-
 }
 
 Klient::~Klient()
@@ -101,44 +98,6 @@ void Klient::Posli(string sprava)
 	sf::sleep(t);
 }
 
-void Klient::Posielanie()
-{
-
-	using namespace sf;
-	Event event;
-	while (true)
-	{
-		
-		if (Keyboard::isKeyPressed(Keyboard::Key::Up))
-		{
-			char sprava[50] = "";
-			sprintf_s(sprava, "%d U", cisHraca);
-			Posli(sprava);
-		}
-		else {
-			if (Keyboard::isKeyPressed(Keyboard::Key::Down))
-			{
-				char sprava[50] = "";
-				sprintf_s(sprava, "%d D", cisHraca);
-				Posli(sprava);
-			}
-			else {
-				if (Keyboard::isKeyPressed(Keyboard::Key::Q))
-				{
-					Posli("koniec");
-					break;
-				}
-				else {
-					Posli("nic");
-
-				}
-			}
-
-		}
-
-	
-	}
-}
 
 
 void Klient::hra()
@@ -158,7 +117,9 @@ void Klient::hra()
 	using namespace sf;	
 	cout << "otvaranie hry" << endl;
 	RenderWindow window(VideoMode(800, 640), "POS-PONG");
+
 	thread citanie(&Klient::Posielanie, this);
+
 	Event event;
 	CircleShape kruh(10);
 	RectangleShape paddle1(Vector2f(15, 100));
@@ -178,7 +139,7 @@ void Klient::hra()
 				window.close();
 			}
 		}
-		/*if (Keyboard::isKeyPressed(Keyboard::Key::Up))
+		if (Keyboard::isKeyPressed(Keyboard::Key::Up))
 		{
 			char sprava[50] = "";
 			sprintf_s(sprava, "%d U", cisHraca);
@@ -202,7 +163,7 @@ void Klient::hra()
 				}
 			}
 			
-		}*/
+		}
 		
 		window.clear(Color::White);
 		cout << "cita udaje" << endl;
