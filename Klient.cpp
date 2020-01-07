@@ -46,7 +46,7 @@ void Klient::Citaj()
 	bx by suradnice lopty
 	s1 s2 score hracov
 	*/
-	string delimiter = "-";
+	
 	size_t recieveddata = 0;
 	cout << "Klient pripraveny na citanie" << endl;
 	char data[50];
@@ -66,10 +66,10 @@ void Klient::Citaj()
 				string token;
 				for (int i = 0; i < 8; i++)
 				{
-					pos = s.find(delimiter);
+					pos = s.find("-");
 					token = s.substr(0, pos);
 					udaje[i] = stoi(token);
-					s.erase(0, pos + delimiter.length());					
+					s.erase(0, pos + 1);					
 				}
 					
 				
