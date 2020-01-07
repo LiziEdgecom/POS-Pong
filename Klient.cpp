@@ -48,8 +48,14 @@ void Klient::Citaj()
 	*/
     string delimiter = "-";
 	size_t recieveddata = 0;
-	char data[81];
 	cout << "Klient pripraveny na citanie"<<endl;
+	char data[80];
+	while (true)
+	{
+
+	
+	
+	
 	while (true)
 	{   
 		
@@ -66,19 +72,21 @@ void Klient::Citaj()
 				while ((pos_end = string(data).find(delimiter, pos_start)) != string::npos) {
 					slovo = string(data).substr(pos_start, pos_end - pos_start);
 					pos_start = pos_end + delim_len;
+					printf("%s", slovo);
 					res.push_back(slovo);
 				}
 
 			res.push_back(string(data).substr(pos_start));
-			//mtx.lock;
+			mtx.lock;
 			for (int i = 0; i < 8; i++)
 			{
 				udaje[i] = stoi(res[i]);
 			}	
-			//mtx.unlock;
-			//std::fill_n(data, 81, 0);
+			mtx.unlock;
+			std::fill_n(data, 81, 0);
 			break;
 		}
+	}
 	}
 }
 
@@ -118,7 +126,7 @@ void Klient::hra()
 	cout << "otvaranie hry" << endl;
 	RenderWindow window(VideoMode(800, 640), "POS-PONG");
 
-	thread citanie(&Klient::Posielanie, this);
+	thread citanie(&Klient::Citaj, this);
 
 	Event event;
 	CircleShape kruh(10);
@@ -169,7 +177,7 @@ void Klient::hra()
 		cout << "cita udaje" << endl;
 		Citaj();
 		cout << "udaje nacitane" << endl;
-		//mtx.lock;
+		mtx.lock;
 		kruh.setPosition(udaje[4], udaje[5]);
 		
 		window.draw(kruh);
@@ -179,7 +187,7 @@ void Klient::hra()
 		window.draw(paddle1);
 		
 		paddle2.setPosition(Vector2f(udaje[2], udaje[3]));
-		//mtx.unlock;
+		mtx.unlock;
 		window.draw(paddle2);
 		window.display();
 		sleep(t);		
