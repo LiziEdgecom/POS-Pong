@@ -52,6 +52,7 @@ void Klient::Citaj()
     string delimiter = "-";
 	char data[81];
 	cout << "Klient pripraveny na citanie"<<endl;
+	while(true){
 	while (true)
 	{   
 		
@@ -80,7 +81,9 @@ void Klient::Citaj()
 			}	
 			mtx.unlock;
 			std::fill_n(data, 81, 0);
+			break;
 		}
+	}
 	}
 }
 
