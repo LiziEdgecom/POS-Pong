@@ -63,28 +63,37 @@ void Klient::Citaj()
 			cout << "cakam" << endl;
 			if (socket.receive(data, 49, recieveddata) == sf::Socket::Done)
 			{
-				cout << "Server poslal: " << string(data) << endl;
-
-				//rozdelenie stringu
-				size_t pos = 0;
-				string s = data;
-				string token;
-				string delimiter = "-";
-				mtx.lock();
-				for (int i = 0; i < 8; i++)
+				if (string(data).substr(0, 6) == "koniec")
 				{
-					pos = s.find(delimiter);
-					token = s.substr(0, pos);
-					udaje[i] = stoi(token);
-					s.erase(0, pos + delimiter.length());
+					hraBezi = false;
+					break;
 				}
-				mtx.unlock();
+				else {
+					cout << "Server poslal: " << string(data) << endl;
 
-				break;
+					//rozdelenie stringu
+					size_t pos = 0;
+					string s = data;
+					string token;
+					string delimiter = "-";
+					mtx.lock();
+					for (int i = 0; i < 8; i++)
+					{
+						pos = s.find(delimiter);
+						token = s.substr(0, pos);
+						udaje[i] = stoi(token);
+						s.erase(0, pos + delimiter.length());
+					}
+					mtx.unlock();
+
+					break;
+				}
+
 			}
 		}
+
 	}
-	
+
 }
 
 
@@ -164,7 +173,6 @@ void Klient::hra()
 					if (hraBezi)
 					{
 						Posli("koniec");
-						hraBezi = false;
 						cout << "Koniec hry!" << endl;
 					}
 				}
