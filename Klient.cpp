@@ -49,14 +49,14 @@ void Klient::Citaj()
 	string delimiter = "-";
 	size_t recieveddata = 0;
 	cout << "Klient pripraveny na citanie" << endl;
-	char data[80];
+	char data[50];
 	while (true)
 	{
 		while (true)
 		{
 
 			cout << "cakam" << endl;
-			if (socket.receive(data, 80, recieveddata) == sf::Socket::Done)
+			if (socket.receive(data, 49, recieveddata) == sf::Socket::Done)
 			{
 				cout << "Server poslal: " << string(data) << endl;
 
@@ -64,13 +64,14 @@ void Klient::Citaj()
 				size_t pos = 0;
 				string s = data;
 				string token;
-				int i = 0;
-				while ((pos = s.find(delimiter)) != std::string::npos) {
+				for (int i = 0; i < 8; i++)
+				{
 					token = s.substr(0, pos);
 					udaje[i] = stoi(token);
-					s.erase(0, pos + delimiter.length());
-					i++;
+					s.erase(0, pos + delimiter.length());					
 				}
+					
+				
 				/*mtx.lock();
 				for (int i = 0; i < 8; i++)
 				{
@@ -170,13 +171,13 @@ void Klient::hra()
 		window.clear(Color::White);
 		//cout << "cita udaje" << endl;
 		//cout << "udaje nacitane" << endl;
-		mtx.lock();
+		//mtx.lock();
 		kruh.setPosition(udaje[4], udaje[5]);
 		window.draw(kruh);
 		paddle1.setPosition(Vector2f(udaje[0], udaje[1]));
 		window.draw(paddle1);
 		paddle2.setPosition(Vector2f(udaje[2], udaje[3]));
-		mtx.unlock();
+		//mtx.unlock();
 		window.draw(paddle2);
 		window.display();
 		sleep(t);
