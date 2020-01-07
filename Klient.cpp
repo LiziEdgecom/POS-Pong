@@ -49,6 +49,10 @@ void Klient::Citaj()
 	bx by suradnice lopty
 	s1 s2 score hracov
 	*/
+	while (true)
+	{
+
+	
     string delimiter = "-";
 	char data[81];
 	cout << "Klient pripraveny na citanie"<<endl;
@@ -73,14 +77,17 @@ void Klient::Citaj()
 			}
 
 			res.push_back(string(data).substr(pos_start));
-			mtx.lock;
-			for (int i = 0; i < 8; i++)
+			mtx.lock();
+			for (int p = 0; p < 8;p++)
 			{
-				udaje[i] = stoi(res[i]);
+				//printf("zamkol mutex citac");
+				udaje[p] = stoi(res[p]);
 			}	
-			mtx.unlock;
-			std::fill_n(data, 81, 0);
+			mtx.unlock();
+			//std::fill_n(data, 81, 0);
+			break;
 		}
+	}
 	}
 }
 
@@ -168,13 +175,19 @@ void Klient::hra()
 		cout << "cita udaje" << endl;
 		//Citaj();
 		cout << "udaje nacitane" << endl;
-		mtx.lock;
+		mtx.lock();
+		
 		kruh.setPosition(udaje[4], udaje[5]);
+		
 		window.draw(kruh);
+	
 		paddle1.setPosition(Vector2f(udaje[0], udaje[1]));
+		
 		window.draw(paddle1);
+		
 		paddle2.setPosition(Vector2f(udaje[2], udaje[3]));
-		mtx.unlock;
+		
+		mtx.unlock();
 		window.draw(paddle2);
 		window.display();
 		sleep(t);		
