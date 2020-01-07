@@ -14,6 +14,13 @@ Hra::Hra(int sirka, int vyska, Hrac* player1, Hrac* player2, Lopta* paLopta)
 	koniec = false;
 }
 
+Hra::~Hra()
+{
+	delete hrac1;
+	delete hrac2;
+	delete lopta;
+}
+
 void Hra::vykreslenie()
 {
 	system("cls");
