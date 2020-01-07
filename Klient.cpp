@@ -46,7 +46,7 @@ void Klient::Citaj()
 	bx by suradnice lopty
 	s1 s2 score hracov
 	*/
-	string delimiter = "-";
+	
 	size_t recieveddata = 0;
 	cout << "Klient pripraveny na citanie" << endl;
 	char data[80];
@@ -56,7 +56,7 @@ void Klient::Citaj()
 		{
 
 			cout << "cakam" << endl;
-			if (socket.receive(data, 80, recieveddata) == sf::Socket::Done)
+			if (socket.receive(data, 49, recieveddata) == sf::Socket::Done)
 			{
 				cout << "Server poslal: " << string(data) << endl;
 
@@ -64,13 +64,14 @@ void Klient::Citaj()
 				size_t pos = 0;
 				string s = data;
 				string token;
-				int i = 0;
-				while ((pos = s.find(delimiter)) != std::string::npos) {
+				for (int i = 0; i < 8; i++)
+				{
 					token = s.substr(0, pos);
 					udaje[i] = stoi(token);
-					s.erase(0, pos + delimiter.length());
-					i++;
+					s.erase(0, pos + delimiter.length());					
 				}
+					
+				
 				/*mtx.lock();
 				for (int i = 0; i < 8; i++)
 				{
@@ -80,9 +81,10 @@ void Klient::Citaj()
 				std::fill_n(data, 81, 0);
 				break;
 			}
+			}
 		}
 	}
-}
+
 
 void Klient::Posli(string sprava)
 {
